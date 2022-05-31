@@ -1,0 +1,30 @@
+﻿@*
+    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
+*@
+@{
+}
+
+<a href="@Url.Action("Add", "Transaction")" class="btn btn-primary custombtn ">Add</a>
+
+    @(Html.Kendo().Grid<_79_Project.ViewModel.Transaction.CreateEditViewModel>()
+    .Name("grid")
+    .Columns(columns =>
+    {
+        columns.Bound("").ClientTemplate("<a href='" + @Url.Action("Edit", "Transaction", new { id = "#=ID#" }) + "' class='act-btn'><i class='icon-pencil'></i></a>")
+                                      .Width(50).Title("Action").Filterable(false).HeaderHtmlAttributes(new { @class = "action-header" }).HtmlAttributes(new { @class = "action-col padding-left-10" });
+
+        columns.Bound(p => p.TransactionDate).Format("{0:yyyy-mm-dd}");
+        columns.Bound(p => p.Description).Title("Description");
+        columns.Bound(p => p.Status).Title("Credit");
+        columns.Bound(p => p.Amount).Title("Amount");
+    })
+    .Pageable()
+    .Sortable()
+    .Scrollable()
+    .HtmlAttributes(new { style = "height:550px;" })
+    .DataSource(dataSource => dataSource
+        .Ajax()
+        .PageSize(20)
+        .Read(read => read.Action("List", "Transaction"))
+    )
+)

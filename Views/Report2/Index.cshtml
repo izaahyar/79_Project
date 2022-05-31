@@ -1,0 +1,100 @@
+﻿
+
+@{
+    ViewData["Title"] = "Report 2";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div class="window-body">
+
+    <div class="form-group">
+        <label for="Customer">Customer:</label>
+
+        @(Html.Kendo().DropDownList()
+                .HtmlAttributes(new { @class = "form-control" })
+                .OptionLabel("Select Customer...")
+                .DataTextField("Text")
+                .DataValueField("Value")
+                .Name("AccountId")
+                .DataSource(source =>
+                {
+                    source.Read(read =>
+                    {
+                        read.Action("GetCustomer", "Report2");
+                    });
+                })
+				)
+    </div>
+    <div class="form-group">
+        <label for="StartDate">Start Date:</label>
+        <input type="date" class="form-control" id="StartDate">
+    </div>
+    <div class="form-group">
+        <label for="EndDate">End Date:</label>
+        <input type="date" class="form-control" id="EndDate">
+    </div>
+</div>
+<div class="window-footer">
+    <div class="btn-wrapper">
+        <button type="button" id="btnShow" name="btnShow" class="btn btn-secondary">Show</button>
+    </div>
+</div>
+<script>
+    $(document).ready(function () {
+        var now = new Date();
+        var month = (now.getMonth() + 1);
+        var day = now.getDate();
+        if (month < 10)
+            month = "0" + month;
+        if (day < 10)
+            day = "0" + day;
+        var today = now.getFullYear() + '-' + month + '-' + day;
+
+        $('#StartDate').val(today);
+        $('#EndDate').val(today);
+    });
+    function getParam() {
+        return {
+            accountId: $("#AccountId").val(),
+            StartDate: $("#StartDate").val(),
+            EndDate: $("#EndDate").val()
+        };
+    }
+</script>
+
+@(Html.Kendo().Grid<_79_Project.ViewModel.Report.ListReport2ViewModel>()
+            .Name("gridReport2")
+            .Columns(columns =>
+            {
+                columns.Bound(p => p.TransactionDate).Format("{0:yyyy-mm-dd}");
+                columns.Bound(p => p.Description).Title("Description");
+                columns.Bound(p => p.Credit).Title("Credit");
+                columns.Bound(p => p.Debit).Title("Debit");
+                columns.Bound(p => p.Amount).Title("Amount");
+            })
+            .Pageable()
+            .Sortable()
+            .Scrollable()
+            .HtmlAttributes(new { style = "height:550px;" })
+            .DataSource(dataSource => dataSource
+                .Ajax()
+                .PageSize(10)
+                .Read(r =>
+                            {
+                                r.Action("List2", "Report");
+                                r.Data("getParam");
+                            })
+
+            )
+        )
+
+<script>
+
+    $("#btnShow").click(function (e) {
+        debugger
+        $("#gridReport2").data('kendoGrid').dataSource.read();
+        $("#gridReport2").data('kendoGrid').refresh();
+    });
+
+   
+</script>

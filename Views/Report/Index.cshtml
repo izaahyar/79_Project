@@ -1,0 +1,18 @@
+﻿
+    @(Html.Kendo().Grid<_79_Project.ViewModel.Report.ListReport1ViewModel>()
+    .Name("grid2")
+    .Columns(columns =>
+    {
+        columns.Bound(p => p.Name);
+        columns.Bound(p => p.TotalPoin).Title("Total Poin");
+    })
+    .Pageable()
+    .Sortable()
+    .Scrollable()
+    .HtmlAttributes(new { style = "height:550px;" })
+    .DataSource(dataSource => dataSource
+        .Ajax()
+        .PageSize(20)
+        .Read(read => read.Action("List", "Report"))
+    )
+)
