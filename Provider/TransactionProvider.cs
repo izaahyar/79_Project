@@ -107,6 +107,7 @@ namespace _79_Project.Provider
             if (!string.IsNullOrEmpty(ID))
             {
                 TblTPembayaran tp = context.TblTPembayaran.Where(e => e.Id == Convert.ToInt32(model.ID)).FirstOrDefault();
+                model.ID = model.ID;
                 model.AccountId = tp.AccountId;
                 model.TransactionDate = (DateTime)tp.TransactionDate;
                 model.Status = tp.Status;
