@@ -41,6 +41,7 @@ namespace _79_Project.Provider
                 TblTPembayaran tp = new TblTPembayaran();
                 tp.AccountId = model.AccountId;
                 tp.TransactionDate = model.TransactionDate;
+                tp.Description = model.Description;
                 tp.Status = model.Status;
                 tp.Amount = model.Amount;
                 tp.CreatedBy = 100;
@@ -65,10 +66,11 @@ namespace _79_Project.Provider
                 TblTPembayaran tp = context.TblTPembayaran.Where(e => e.Id == Convert.ToInt32(model.ID)).FirstOrDefault();
                 tp.AccountId = tp.AccountId;
                 tp.TransactionDate = model.TransactionDate;
+                tp.Description = model.Description;
                 tp.Status = model.Status;
                 tp.Amount = model.Amount;
-                tp.CreatedBy = 100;
-                tp.CreatedDate = DateTime.Now;
+                tp.UpdateBy = 100;
+                tp.UpdateDate = DateTime.Now;
                 context.TblTPembayaran.Update(tp);
                 context.SaveChanges();
             }
@@ -106,10 +108,11 @@ namespace _79_Project.Provider
             CreateEditViewModel model = new CreateEditViewModel();
             if (!string.IsNullOrEmpty(ID))
             {
-                TblTPembayaran tp = context.TblTPembayaran.Where(e => e.Id == Convert.ToInt32(model.ID)).FirstOrDefault();
-                model.ID = model.ID;
+                TblTPembayaran tp = context.TblTPembayaran.Where(e => e.Id == Convert.ToInt32(ID)).FirstOrDefault();
+                model.ID = ID;
                 model.AccountId = tp.AccountId;
                 model.TransactionDate = (DateTime)tp.TransactionDate;
+                model.Description = tp.Description;
                 model.Status = tp.Status;
                 model.Amount = (decimal)tp.Amount;
             }

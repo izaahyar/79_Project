@@ -9,7 +9,7 @@
     <div class="window-body">
         <div class="form-group">
             <label for="Customer">Customer:</label>
-
+            @Html.HiddenFor(m => m.ID)
             @(Html.Kendo().DropDownListFor(e=>e.AccountId)
                 .HtmlAttributes(new { @class = "form-control" })
                 .OptionLabel("Select Customer...")
@@ -25,14 +25,16 @@
 				)
         </div>
         <div class="form-group">
-            <label for="Transaction">Transaction Date:</label>
-            <input type="date" class="form-control" id="Transaction">
+            <label for="TransactionDate">Transaction Date:</label>
+
+            @Html.Kendo().DatePickerFor(x => x.TransactionDate).HtmlAttributes(new { @class = "form-control", onkeydown = "javascript:return false;", type= "date"})
+
         </div>
         <div class="form-group">
             <label for="Description">Description:</label>
             @(Html.Kendo().DropDownListFor(e=>e.Description)
                 .HtmlAttributes(new { @class = "form-control" })
-                .OptionLabel("Select Customer...")
+                .OptionLabel("Select Description...")
                 .DataTextField("Text")
                 .DataValueField("Value")
                 .DataSource(source =>
@@ -48,7 +50,7 @@
             <label for="Status">Status:</label>
             @(Html.Kendo().DropDownListFor(e=>e.Status)
                 .HtmlAttributes(new { @class = "form-control" })
-                .OptionLabel("Select Customer...")
+                .OptionLabel("Select Status...")
                 .DataTextField("Text")
                 .DataValueField("Value")
                 .DataSource(source =>
@@ -62,7 +64,7 @@
         </div>
         <div class="form-group">
             <label for="Amount">Amount:</label>
-            <input type="number" class="form-control" id="Amount">
+            @Html.TextBoxFor(m => m.Amount, new { @class = "form-control" })
         </div>
     </div>
     <div class="window-footer">
@@ -77,12 +79,11 @@
 }
 <script>
     function BacktoIndex() {
-        window.location.href = "/Payroll/TerminationPeriod";
+        window.location.href = "/Transaction/Index";
     }
 
     function SaveData() {
-        $("#btnProcess").disableBtn();
-        $("#btnSave").disableBtn();
+        debugger
         var url = "";
         if ($("#ID").val() == "") {
             url = "/Transaction/Save";
@@ -99,7 +100,7 @@
             processData: false,
             success: function (result) {
                 if (result.IsSuccess) {
-                    window.location.href = "/";
+                    window.location.href = "/Transaction/Index";
                 }
             }
         });

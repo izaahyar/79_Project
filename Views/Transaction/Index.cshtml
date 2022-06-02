@@ -10,8 +10,8 @@
     .Name("grid")
     .Columns(columns =>
     {
-        columns.Bound("").ClientTemplate("<a href='" + @Url.Action("Edit", "Transaction", new { id = "#=ID#" }) + "' class='act-btn'><i class='icon-pencil'></i></a>")
-                                      .Width(50).Title("Action").Filterable(false).HeaderHtmlAttributes(new { @class = "action-header" }).HtmlAttributes(new { @class = "action-col padding-left-10" });
+        columns.Bound("").ClientTemplate("<a data-id='#=ID#' href='" + Url.Action("Edit", "Transaction", new { id = "#=ID#" }) + "' class='rid-link btn btn-primary'>Edit</a>")
+                                       .Width(90).Title("").Filterable(false).HeaderHtmlAttributes(new { @class = "action-header padding-left-10" }).HtmlAttributes(new { @class = "action-col" });
 
         columns.Bound(p => p.TransactionDate).Format("{0:yyyy-mm-dd}");
         columns.Bound(p => p.Description).Title("Description");
